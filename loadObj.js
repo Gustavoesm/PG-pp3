@@ -1,8 +1,8 @@
 const fs = require('fs')
 
-async function loadObj(path)
+function loadObj(path)
 {
-    const obj_text = fs.readFileSync('coarseTri.egea2.obj', 'utf8')
+    const obj_text = fs.readFileSync('models/coarseTri.hand.obj', 'utf8')
  
     // OBJ Parser
  
