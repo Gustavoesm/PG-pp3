@@ -2,7 +2,7 @@ const fs = require('fs')
 
 function loadObj(path)
 {
-    const obj_text = fs.readFileSync('models/coarseTri.hand.obj', 'utf8')
+    const obj_text = fs.readFileSync('coarseTri.egea2.obj', 'utf8')
  
     // OBJ Parser
  
@@ -16,6 +16,7 @@ function loadObj(path)
     const lines = obj_text.split('\n');
  
     let vertices = new Array;
+    let wireframeIndices = new Array;
     let triangleIndices = new Array;
     
     lines.forEach(element => {
@@ -33,6 +34,14 @@ function loadObj(path)
  
             // OBJ indices start at 1
             // Subtracting 1 from every index since JavaScript indices start at 0
+            wireframeIndices.push(parseInt(match[1]) - 1);
+            wireframeIndices.push(parseInt(match[2]) - 1);
+ 
+            wireframeIndices.push(parseInt(match[1]) - 1);
+            wireframeIndices.push(parseInt(match[3]) - 1);
+ 
+            wireframeIndices.push(parseInt(match[2]) - 1);
+            wireframeIndices.push(parseInt(match[3]) - 1);
  
             triangleIndices.push(parseInt(match[1]) - 1);
             triangleIndices.push(parseInt(match[2]) - 1);
@@ -52,13 +61,24 @@ function loadObj(path)
             triangleIndices.push(parseInt(match[3].split('/')[0] - 1));
             triangleIndices.push(parseInt(match[4].split('/')[0] - 1));
  
+ 
+            wireframeIndices.push(parseInt(match[1].split('/')[0] - 1));
+            wireframeIndices.push(parseInt(match[2].split('/')[0] - 1));
+ 
+            wireframeIndices.push(parseInt(match[1].split('/')[0] - 1));
+            wireframeIndices.push(parseInt(match[4].split('/')[0] - 1));
+ 
+            wireframeIndices.push(parseInt(match[2].split('/')[0] - 1));
+            wireframeIndices.push(parseInt(match[3].split('/')[0] - 1));
+ 
+            wireframeIndices.push(parseInt(match[3].split('/')[0] - 1));
+            wireframeIndices.push(parseInt(match[4].split('/')[0] - 1));
         }
     });
  
     return {vertices:Float32Array.from(vertices), triangleIndices:Uint16Array.from(triangleIndices)}
 
 }
-
 module.exports = {
     loadObj
 }
